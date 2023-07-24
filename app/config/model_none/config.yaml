@@ -1,0 +1,310 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.13.9
+    framework: xgboost
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.9.12
+    start_time: 1677490062.696598
+    t:
+      1:
+      - 1
+      - 2
+      - 3
+      - 5
+      - 6
+      - 33
+      - 53
+      - 55
+      2:
+      - 1
+      - 2
+      - 3
+      - 5
+      - 6
+      - 33
+      - 53
+      - 55
+      3:
+      - 2
+      - 3
+      - 8
+      - 15
+      - 16
+      - 23
+      - 39
+      4: 3.9.12
+      5: 0.13.9
+      8:
+      - 5
+age_gender_metas:
+  desc: null
+  value: /nvme/shared/autopilot/training_publish/age_gender_metas.pkl
+apply_weight_balancing:
+  desc: null
+  value: false
+as_supervised:
+  desc: null
+  value: false
+base_for_condition:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/patient.ftr
+base_for_encounter:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/patient.ftr
+base_for_medication:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/patient.ftr
+base_for_patient:
+  desc: null
+  value: /nvme/shared/autopilot/training/obs.ftr
+base_for_procedure:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/patient.ftr
+base_for_procedure_op_plan:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/patient.ftr
+batch_size:
+  desc: null
+  value: 2048
+bdp_params:
+  desc: null
+  value:
+    _count: 1000
+    _include: BiologicallyDerivedProduct:request
+    _sort: -shipStorageEnd
+    shipProductCode: TKZ,TKP
+bdp_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/bdp.ftr
+bdp_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/bdp.ftr
+bundle_cache_folder_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/cache
+clinic_filter:
+  desc: null
+  value: None
+condition_constraints:
+  desc: null
+  value:
+    subject: patient_id
+condition_counts:
+  desc: null
+  value: /nvme/shared/autopilot/training_publish/cond_counts.pkl
+condition_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: -recorded-date
+condition_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/condition.ftr
+condition_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/condition.ftr
+dataset_dir:
+  desc: null
+  value: /nvme/shared/autopilot/training_tfds
+dataset_name:
+  desc: null
+  value: 0.1.3
+dense:
+  desc: null
+  value: 128
+encounter_constraints:
+  desc: null
+  value:
+    subject: patient_id
+encounter_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: -date
+encounter_path:
+  desc: null
+  value: /home/merengelke/autopilot_ml/data_preprocessing/raw_data/encounter.ftr
+encounter_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/encounter_legacy.ftr
+end_datetime:
+  desc: null
+  value: 01-01-2022
+epochs:
+  desc: null
+  value: 100
+folders_to_clear:
+  desc: null
+  value:
+  - /nvme/shared/autopilot/training
+  - /nvme/shared/autopilot/training_filtered
+  - /nvme/shared/autopilot/training_tfds/autopilot_dataset
+  - /nvme/shared/autopilot/training_tfds/downloads
+image:
+  desc: null
+  value: /nvme/shared/autopilot/training_publish/img.png
+in_lstm:
+  desc: null
+  value: 128
+input_dim_station_embedding:
+  desc: null
+  value: 291
+is_live_prediction:
+  desc: null
+  value: false
+learning_rate:
+  desc: null
+  value: 0.001
+loss_function:
+  desc: null
+  value: AdamW
+medication_admin_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: _lastUpdated
+medication_constraints:
+  desc: null
+  value:
+    subject: patient_id
+medication_counts:
+  desc: null
+  value: /nvme/shared/autopilot/training_publish/med_counts.pkl
+medication_merged_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/medication_merged.ftr
+medication_merged_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/medication.ftr
+medication_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: _lastUpdated
+medication_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/medication.ftr
+medication_path_raw:
+  desc: null
+  value: /nvme/shared/autopilot/training/medication_raw.ftr
+medication_req_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: _lastUpdated
+norm_type:
+  desc: null
+  value: LayerNorm
+obs_params:
+  desc: null
+  value:
+    _count: 500
+    _include: Observation:based-on
+    _sort: -date
+    code: zTHRA
+obs_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/obs.ftr
+obs_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/obs.ftr
+obs_raw:
+  desc: null
+  value: /nvme/shared/autopilot/training/obs_raw.ftr
+out_lstm:
+  desc: null
+  value: 128
+patient_constraints:
+  desc: null
+  value:
+    _id: patient_id
+patient_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: -birthdate
+patient_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/patient.ftr
+patient_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/patient.ftr
+prefetch:
+  desc: null
+  value: true
+preprocessed_by_encounter_path:
+  desc: null
+  value: /nvme/shared/autopilot/training_training_data/preprocessed_by_encounter.pkl
+preprocessed_windows_path:
+  desc: null
+  value: /nvme/shared/autopilot/training_training_data/windows.pkl
+procedure_constraints:
+  desc: null
+  value:
+    subject: patient_id
+procedure_counts:
+  desc: null
+  value: /nvme/shared/autopilot/training_publish/pro_counts.pkl
+procedure_op_plan_constraints:
+  desc: null
+  value:
+    subject: patient_id
+procedure_op_plan_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/procedure_op_plan.ftr
+procedure_op_plan_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/procedure_op_plan.ftr
+procedure_params:
+  desc: null
+  value:
+    _count: 1000
+    _sort: -date
+procedure_params_op_plan:
+  desc: null
+  value:
+    _count: 1000
+    _sort: -date
+procedure_path:
+  desc: null
+  value: /nvme/shared/autopilot/training/procedure.ftr
+procedure_path_filtered:
+  desc: null
+  value: /nvme/shared/autopilot/training_filtered/procedure.ftr
+read_from_fhir_cache:
+  desc: null
+  value: true
+reload_cache:
+  desc: null
+  value: false
+root_dir:
+  desc: null
+  value: /nvme/shared/autopilot
+scalars_path:
+  desc: null
+  value: app/config/scalers.pkl
+shuffle_files:
+  desc: null
+  value: true
+start_datetime:
+  desc: null
+  value: 01-01-2017
+time_delta:
+  desc: null
+  value: 10
+train_size:
+  desc: null
+  value: 0.8
+use_sam:
+  desc: null
+  value: false
+wb_project_name:
+  desc: null
+  value: autopilot_none
+weight_decay_score:
+  desc: null
+  value: 0

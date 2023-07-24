@@ -1,0 +1,136 @@
+# Defining params for FHIR-Extraction
+
+# run pipline for live prediction or training
+is_live_prediction: True
+
+# reload with cache
+reload_cache: False
+
+# folders to clear on each run
+folders_to_clear: ['./live', './live_filtered', './live_training_data', './live_tfds/autopilot_dataset', './live_tfds/downloads']
+
+# Whether we should read the bundles from a cache folder, in case they have already been computed
+read_from_fhir_cache: False
+bundle_cache_folder_path: "/nvme/shared/autopilot/live_prediction/cache"
+
+# days to pull from fhir
+time_delta: 30
+
+# BDP
+bdp_path: './live/bdp.ftr'
+bdp_path_filtered: './live_filtered/bdp.ftr'
+bdp_params: {
+  'shipProductCode': 'TKZ,TKP',
+  '_count': 1000,
+  '_sort': '-shipStorageEnd',
+  '_include': 'BiologicallyDerivedProduct:request'
+}
+
+# Observation
+obs_path: './live/obs.ftr'
+obs_path_filtered: './live_filtered/obs.ftr'
+obs_params: {
+  'code': 'zTHRA',
+  '_count': 500,
+  '_sort': '-date',
+  '_include': 'Observation:based-on'
+}
+
+# Patient
+base_for_patient: './live_filtered/obs.ftr'
+patient_path: './live/patient.ftr'
+patient_path_filtered: './live_filtered/patient.ftr'
+patient_params: {
+  '_count': 1000,
+  '_sort': '-birthdate'
+}
+patient_constraints: {'_id': 'patient_id'}
+
+# Procedure
+base_for_procedure: './live_filtered/patient.ftr'
+procedure_path: './live/procedure.ftr'
+procedure_path_filtered: './live_filtered/procedure.ftr'
+procedure_params: {
+  '_count': 1000,
+  '_sort': '-date'
+}
+procedure_constraints: {'subject': 'patient_id'}
+
+# Procedure OP-Plan
+base_for_procedure_op_plan: './live_filtered/patient.ftr'
+procedure_op_plan_path: './live/procedure_op_plan.ftr'
+procedure_op_plan_path_filtered: './live_filtered/procedure_op_plan.ftr'
+procedure_op_plan_constraints: {'subject': 'patient_id'}
+procedure_params_op_plan: {
+  '_count': 1000,
+  '_sort': '-date'
+}
+
+# Encounter
+base_for_encounter: './live_filtered/patient.ftr'
+encounter_path: './live/encounter.ftr'
+encounter_path_filtered: './live_filtered/encounter.ftr'
+encounter_params: {
+  '_count': 1000,
+  '_sort': '-date'
+}
+encounter_constraints: {'subject': 'patient_id'}
+
+# Condition
+base_for_condition: './live_filtered/patient.ftr'
+condition_path: './live/condition.ftr'
+condition_path_filtered: './live_filtered/condition.ftr'
+condition_params: {
+  '_count': 1000,
+  '_sort': '-recorded-date'
+}
+condition_constraints: {'subject': 'patient_id'}
+
+# Medication
+base_for_medication: './live_filtered/patient.ftr'
+medication_path_raw: './live/medication_raw.ftr'
+medication_path: './live/medication.ftr'
+medication_merged_path: './live/medication_merged.ftr'
+medication_merged_path_filtered: './live_filtered/medication.ftr'
+medication_params: {
+  '_count': 1000,
+  '_sort': '_lastUpdated'
+}
+medication_req_params: {
+  '_count': 1000,
+  '_sort': '_lastUpdated',
+  'identifier': 'https://uk-essen.de/HIS/BD/Cato/MedicationRequest%7C'
+}
+medication_admin_params: {
+  '_count': 1000,
+  '_sort': '_lastUpdated'
+}
+medication_constraints: {'subject': 'patient_id'}
+
+
+# Creating sliding window
+preprocessed_by_encounter_path: './live_training_data/preprocessed_by_encounter.pkl'
+preprocessed_windows_path: './live_training_data/windows.pkl'
+
+# TF Prediction
+model_path: 'app/config/model_'
+scalars_path: 'app/config/scalers.pkl'
+train_size: 0.8
+learning_rate: 0.001
+loss_function: 'Adam'
+use_sam: False
+in_lstm: 128
+out_lstm: 128
+dense: 128
+norm_type: 'BatchNorm'
+clinic_filter: None
+dataset_name: "1.0.0" # 1.0.0 all, 2.0.0 hema onco, 3.0.0 heart thorax
+apply_weight_balancing: False
+shuffle_files: False
+as_supervised: False
+prefetch: True
+batch_size: 1
+dataset_dir: "./live_tfds"
+
+
+

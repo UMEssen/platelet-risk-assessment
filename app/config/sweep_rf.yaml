@@ -1,0 +1,39 @@
+method: bayes
+metric:
+  name: val_auc
+  goal: maximize
+parameters:
+  booster:
+    values: ['gbtree', 'dart']
+  reg_lambda:
+    min: 1e-8
+    max: 1.0
+    distribution: log_uniform_values
+  reg_alpha:
+    min: 1e-8
+    max: 1.0
+    distribution: log_uniform_values
+  max_depth:
+    values: [10, 20, 30, 40]
+  learning_rate:
+    min: 1e-8
+    max: 1.0
+    distribution: log_uniform_values
+  gamma:
+    min: 1e-8
+    max: 1.0
+    distribution: log_uniform_values
+  grow_policy:
+    values: ['depthwise', 'lossguide']
+  sampling_method:
+    values: ['uniform', 'gradient_based']
+run_cap: 600
+name: xgb_sweep ml
+project: autopilot_rf_none
+program: app.run
+command:
+  - python
+  - -m
+  - ${program}
+  - ml
+  - ${args}

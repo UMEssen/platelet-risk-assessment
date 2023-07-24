@@ -1,0 +1,21 @@
+colorlog==6.7.0
+fhir==0.0.4
+fhir.resources==6.4.0
+fhir-pyrate==0.2.0
+holidays==0.27.1
+matplotlib==3.7.1
+pandas==1.5.3
+requests==2.31.0
+schedule==1.2.0
+scikit-learn==1.3.0
+tensorflow-addons==0.18.0
+tensorflow-datasets==4.6.0
+# tensorflow==2.12.0
+tqdm==4.65.0
+wandb==0.15.4
+# xgboost==1.7.6
+pyarrow==12.0.1
+seaborn==0.12.2
+pydantic==1.8.2
+lime==0.2.0.1
+jinja2==3.1.2

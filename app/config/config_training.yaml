@@ -1,0 +1,180 @@
+# Defining params for FHIR-Extraction
+
+# run pipline for live prediction or training
+is_live_prediction: False
+
+# force reloading of resources
+reload_cache: False
+
+# days to pull from fhir for live prediction
+time_delta: 10
+
+# times to filter in case of training run / set to None on live prediction
+start_datetime: '01-01-2017'
+end_datetime: '01-01-2022'
+
+# Whether we should read the bundles from a cache folder, in case they have already been computed
+read_from_fhir_cache: False
+bundle_cache_folder_path: "./training/cache"
+# folders to clear on each run
+folders_to_clear: ['./training', './training_filtered',  './training_tfds/autopilot_dataset', './training_tfds/downloads']
+
+
+# BDP
+bdp_path: './training/bdp.ftr'
+bdp_path_filtered: './training_filtered/bdp.ftr'
+bdp_params: {
+  'shipProductCode': 'TKZ,TKP',
+  '_count': 1000,
+  '_sort': '-shipStorageEnd',
+  '_include': 'BiologicallyDerivedProduct:request'
+}
+
+# Observation
+obs_path: './training/obs.ftr'
+obs_raw: './training/obs_raw.ftr'
+obs_path_filtered: './training_filtered/obs.ftr'
+obs_params: {
+  'code': 'zTHRA',
+  '_count': 500,
+  '_sort': '-date',
+  '_include': 'Observation:based-on'
+}
+
+# Patient
+base_for_patient: './training/obs.ftr'
+patient_path: './training/patient.ftr'
+patient_path_filtered: './training_filtered/patient.ftr'
+patient_params: {
+  '_count': 1000,
+  '_sort': '-birthdate'
+}
+patient_constraints: {'_id': 'patient_id'}
+
+# Procedure
+base_for_procedure: './training_filtered/patient.ftr'
+procedure_path: './training/procedure.ftr'
+procedure_path_filtered: './training_filtered/procedure.ftr'
+procedure_params: {
+  '_count': 1000,
+  '_sort': '-date'
+}
+procedure_constraints: {'subject': 'patient_id'}
+
+# Procedure OP-Plan
+base_for_procedure_op_plan: './training_filtered/patient.ftr'
+procedure_op_plan_path: './training/procedure_op_plan.ftr'
+procedure_op_plan_path_filtered: './training_filtered/procedure_op_plan.ftr'
+procedure_op_plan_constraints: {'subject': 'patient_id'}
+procedure_params_op_plan: {
+  '_count': 1000,
+  '_sort': '-date'
+}
+
+# Encounter
+base_for_encounter: './training_filtered/patient.ftr'
+encounter_path: './data_preprocessing/raw_data/encounter.ftr'
+encounter_path_filtered: './training_filtered/encounter_legacy.ftr'
+encounter_params: {
+  '_count': 1000,
+  '_sort': '-date'
+}
+encounter_constraints: {'subject': 'patient_id'}
+
+# Condition
+base_for_condition: './training_filtered/patient.ftr'
+condition_path: './training/condition.ftr'
+condition_path_filtered: './training_filtered/condition.ftr'
+condition_params: {
+  '_count': 1000,
+  '_sort': '-recorded-date'
+}
+condition_constraints: {'subject': 'patient_id'}
+
+# Medication
+base_for_medication: './training_filtered/patient.ftr'
+medication_path_raw: './training/medication_raw.ftr'
+medication_path: './training/medication.ftr'
+medication_merged_path: './training/medication_merged.ftr'
+medication_merged_path_filtered: './training_filtered/medication.ftr'
+medication_params: {
+  '_count': 1000,
+  '_sort': '_lastUpdated'
+}
+medication_req_params: {
+  '_count': 1000,
+  '_sort': '_lastUpdated',
+#  'identifier': 'https://uk-essen.de/HIS/BD/Cato/MedicationRequest%7C'
+}
+medication_admin_params: {
+  '_count': 1000,
+  '_sort': '_lastUpdated'
+}
+medication_constraints: {'subject': 'patient_id'}
+
+# Creating sliding window
+preprocessed_by_encounter_path: './training_training_data/preprocessed_by_encounter.pkl'
+preprocessed_windows_path: './training_training_data/windows.pkl'
+
+# TF Prediction
+scalars_path: 'app/config/scalers.pkl'
+
+# TF Training
+# "0.2.0" hemaconco
+# "0.1.1" all other stations and clinics
+# "0.1.2" all other stations and clinics
+# "0.1.3" all other stations and clinics / clinic bug fix
+# "0.3.1" heart_thorax
+batch_size: 512
+dataset_name: ""
+epochs: 100
+dataset_dir: "./training_tfds"
+# This is were all the train runs will be stored
+wb_project_name: "autopilot"
+learning_rate: 0.001
+weight_decay_score: 0
+in_lstm: 128 #MLP
+out_lstm: 128
+prefetch: True
+train_size: 0.8
+shuffle_files: True
+as_supervised: False
+dense: 256
+norm_type: "LayerNorm" #Batch
+apply_weight_balancing: 'False'
+loss_function: 'AdamW'
+use_sam: False
+clinic_filter: 'hematooncology'
+input_dim_station_embedding: 21 # none: 291 # hematooncology:21, heart_thorax: 18
+
+# Publishing params
+age_gender_metas: "./training_publish/age_gender_metas.pkl"
+age_gender_metas_model_based: "./training_publish/age_gender_metas_by_model.pkl"
+image: "./img_cohort.jpeg"
+image_test_results: "app/3.5_Figure 5.pdf"
+procedure_counts: "./training_publish/pro_counts_gender.pkl"
+medication_counts: "./training_publish/med_counts_gender.pkl"
+condition_counts: "./training_publish/cond_counts_gender.pkl"
+category_counts: "./training_publish/cat_counts_gender.pkl"
+
+# Explainaibility params
+model_path: 'app/config/model_'
+root_dir: '/local/work/merengelke/autopilot/'
+explanation_dir: './xai_lstm/'
+
+# Classic ML training
+classic_ml_dir: './classic_ml'
+model_type: 'rf' # rf, xgb, lr
+#booster: 'gbtree' # gbtree, gblinear, dart
+#lambda: 1
+#alpha: 0
+#max_depth: 6
+#eta: 0.3
+#gamma: 0
+#grow_policy: 'depthwise' # depthwise, lossguide
+#sample_type: 'uniform' # uniform, weighted
+#normalize_type: 'tree' # tree, forest
+#rate_drop: 0
+#skip_drop: 0
+
+

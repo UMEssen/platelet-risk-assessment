@@ -1,0 +1,23 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/app/logs
+/wandb
+
+/app/config/**/cv_*/**
+
+# Pycharm
+.idea/
+*cache*/
+
+# Images
+*.jpg
+*.jpeg
+*.png
+
+# csv files
+*.csv
